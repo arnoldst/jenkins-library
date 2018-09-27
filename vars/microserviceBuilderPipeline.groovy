@@ -157,6 +157,7 @@ def call(body) {
         if (fileExists('pom.xml')) {
           stage ('Maven Build') {
             container ('maven') {
+              sh “cd lib && mvn install:install-file -Dfile=ojdbc7.jar -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1.0.2.0 -Dpackaging=jar && cd ojdbc6/11.2.0.3.0/ && mvn install:install-file -Dfile=ojdbc6-11.2.0.3.0.jar -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.3.0 -Dpackaging=jar”
               def mvnCommand = "mvn -B"
               if (mavenSettingsConfigMap) {
                 mvnCommand += " --settings /msb_mvn_cfg/settings.xml"
